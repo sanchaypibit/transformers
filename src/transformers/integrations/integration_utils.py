@@ -1011,8 +1011,8 @@ class MLflowCallback(TrainerCallback):
                     del combined_dict[name]
             # MLflow cannot log more than 100 values in one go, so we have to split it
             combined_dict_items = list(combined_dict.items())
-            for i in range(0, len(combined_dict_items), self._MAX_PARAMS_TAGS_PER_BATCH):
-                self._ml_flow.log_params(dict(combined_dict_items[i : i + self._MAX_PARAMS_TAGS_PER_BATCH]))
+            # for i in range(0, len(combined_dict_items), self._MAX_PARAMS_TAGS_PER_BATCH):
+            #     self._ml_flow.log_params(dict(combined_dict_items[i : i + self._MAX_PARAMS_TAGS_PER_BATCH]))
             mlflow_tags = os.getenv("MLFLOW_TAGS", None)
             if mlflow_tags:
                 mlflow_tags = json.loads(mlflow_tags)
@@ -1048,11 +1048,11 @@ class MLflowCallback(TrainerCallback):
             ckpt_dir = f"checkpoint-{state.global_step}"
             artifact_path = os.path.join(args.output_dir, ckpt_dir)
             logger.info(f"Logging checkpoint artifacts in {ckpt_dir}. This may take time.")
-            self._ml_flow.pyfunc.log_model(
-                ckpt_dir,
-                artifacts={"model_path": artifact_path},
-                python_model=self._ml_flow.pyfunc.PythonModel(),
-            )
+            # self._ml_flow.pyfunc.log_model(
+            #     ckpt_dir,
+            #     artifacts={"model_path": artifact_path},
+            #     python_model=self._ml_flow.pyfunc.PythonModel(),
+            # )
 
     def __del__(self):
         # if the previous run is not terminated correctly, the fluent API will
